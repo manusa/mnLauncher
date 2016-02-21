@@ -1,2 +1,2 @@
-# mnLauncher - Simple Groovy application launchersss
+# mnLauncher - Simple Groovy application launchers
 Simple application launcher
