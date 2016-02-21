@@ -1,0 +1,2 @@
+# mnLauncher
+Simple application launcher
