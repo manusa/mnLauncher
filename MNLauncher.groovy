@@ -20,6 +20,10 @@
  *  Created by Marc Nuri on 2016-02-21.
  */
 
+import com.fasterxml.jackson.databind.JsonNode
+@Grab(group='com.fasterxml.jackson.core', module='jackson-core', version='2.7.1')
+@Grab(group='com.fasterxml.jackson.core', module='jackson-databind', version='2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
 
 import javax.imageio.ImageIO
 import javax.swing.*
@@ -32,6 +36,9 @@ class Constants {
     final static int S_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     final static int S_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     final static int M_HEIGHT = 25, M_WIDTH = 25;
+    final static String ICON_URL = "favicon.png";
+    final static String MENU_URL = "menu.json";
+
 }
 
 
@@ -45,7 +52,8 @@ private JFrame initFrame() {
     frame.setUndecorated(true);
     frame.setVisible(true);
     final JLabel icon = new JLabel();
-    icon.setIcon(new ImageIcon(ImageIO.read(new File("favicon.png")).getScaledInstance(Constants.M_WIDTH, Constants.M_HEIGHT, Image.SCALE_SMOOTH)));
+    icon.setIcon(new ImageIcon(ImageIO.read(new File(Constants.ICON_URL))
+            .getScaledInstance(Constants.M_WIDTH, Constants.M_HEIGHT, Image.SCALE_SMOOTH)));
     frame.add(icon, BorderLayout.CENTER);
     frame.pack();
     final JPopupMenu menu = initMenu();
@@ -58,6 +66,9 @@ private JFrame initFrame() {
 
 private JPopupMenu initMenu() {
     final JPopupMenu menu = new JPopupMenu();
+    final ObjectMapper om = new ObjectMapper();
+    final JsonNode m = om.readTree(new File("menu.json"));
+
     menu.add(new JMenuItem("Test"));
     menu.add(new JSeparator());
     return menu;
@@ -66,7 +77,7 @@ private JPopupMenu initMenu() {
 private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
     return new MouseAdapter() {
         boolean moving = false;
-        int startX,  startY;
+        int startX, startY;
 
         @Override
         void mouseClicked(MouseEvent e) {
@@ -90,7 +101,7 @@ private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
         void mouseDragged(MouseEvent e) {
             super.mouseDragged(e);
             if (moving) {
-                e.getComponent().setLocation(e.getXOnScreen()-startY, e.getYOnScreen()-startY);
+                e.getComponent().setLocation(e.getXOnScreen() - startY, e.getYOnScreen() - startY);
             }
         }
 
@@ -100,7 +111,7 @@ private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
             super.mouseReleased(e)
             if (moving) {
                 moving = false;
-                e.getComponent().setLocation(e.getXOnScreen()-startY, e.getYOnScreen()-startY);
+                e.getComponent().setLocation(e.getXOnScreen() - startY, e.getYOnScreen() - startY);
             }
         }
     };

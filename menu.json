@@ -1,0 +1,6 @@
+[
+  {
+    "name": "Test Menu",
+    "command":"notepad.exe"
+  }
+]
