@@ -33,12 +33,16 @@ import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import java.awt.image.BufferedImage
 
 class Constants {
-    final static String TITLE = "MNLauncher";
+    final static String TITLE = "mnLauncher";
     final static int S_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     final static int S_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     final static int M_HEIGHT = 25, M_WIDTH = 25;
+    final static int M_ICON_HEIGHT = 20, M_ICON_WIDTH = 20;
+    final static Color MENU_COLOR = Color.WHITE;
+    final static Color MENU_BACKGROUND = Color.DARK_GRAY;
     final static String ICON_URL = "favicon.png";
     final static String MENU_URL = "menu.json";
 
@@ -54,9 +58,13 @@ private JFrame initFrame() {
     frame.setAlwaysOnTop(true);
     frame.setUndecorated(true);
     frame.setVisible(true);
+    final BufferedImage logo = ImageIO.read(new File(Constants.ICON_URL));
+    //Taskbar Icon
+    frame.setIconImage(logo);
+    //Background Icon
     final JLabel icon = new JLabel();
-    icon.setIcon(new ImageIcon(ImageIO.read(new File(Constants.ICON_URL))
-            .getScaledInstance(Constants.M_WIDTH, Constants.M_HEIGHT, Image.SCALE_SMOOTH)));
+    icon.setIcon(new ImageIcon(logo
+            .getScaledInstance(Constants.M_ICON_WIDTH, Constants.M_ICON_HEIGHT, Image.SCALE_SMOOTH)));
     frame.add(icon, BorderLayout.CENTER);
     frame.pack();
     final JPopupMenu menu = initMenu();
@@ -69,6 +77,9 @@ private JFrame initFrame() {
 
 private JPopupMenu initMenu() {
     final JPopupMenu menu = new JPopupMenu();
+    //Maybe change L&F Properties instead.
+    menu.setBackground(Constants.MENU_BACKGROUND);
+    menu.setBorderPainted(false);
     final ObjectMapper om = new ObjectMapper();
     final java.util.List<MenuEntry> entries = om.readValue(new File(Constants.MENU_URL), new TypeReference<java.util.List<MenuEntry>>() {
     });
@@ -82,11 +93,19 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm, JMenu menu) {
         if (me.getEntries() != null && !me.getEntries().isEmpty()) {
             final JMenu m = pm == null ? menu.add(new JMenu()) : pm.add(new JMenu());
             m.setText(me.getName());
+            m.setForeground(Constants.MENU_COLOR);
+            m.setBackground(Constants.MENU_BACKGROUND);
+            m.getPopupMenu().setBackground(Constants.MENU_BACKGROUND);
+            m.getPopupMenu().setBorderPainted(false);
+            m.setBorderPainted(false);
             processMenu(me.getEntries(), null, m);
         } //Standard Menu Entry
         else {
             final JMenuItem mi = pm == null ? menu.add(new JMenuItem()) : pm.add(new JMenuItem());
             mi.setText(me.getName());
+            mi.setBackground(Constants.MENU_BACKGROUND);
+            mi.setBorderPainted(false);
+            mi.setForeground(Constants.MENU_COLOR);
             mi.addActionListener(prepareAction(me));
             //Get Icon
             if (me.getCommand().toLowerCase().endsWith("exe")) {
