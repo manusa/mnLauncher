@@ -8,7 +8,7 @@
     "entries": [
       {
         "name": "NetBeans",
-        "command": "C:\Program Files\Java\NetBeans 8.1\bin\netbeans64.exe"
+        "command": "C:\\Program Files\\Java\\NetBeans 8.1\\bin\\netbeans64.exe"
       }
     ]
   }

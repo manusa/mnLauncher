@@ -28,6 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import javax.imageio.ImageIO
 import javax.swing.*
 import java.awt.*
+import java.awt.event.ActionEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 
@@ -81,8 +82,14 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm,JMenu menu){
             processMenu(me.getEntries(), null, m);
         } //Standard Menu Entry
         else {
-            final JMenuItem mi = pm == null ? menu.add(new JMenu()) : pm.add(new JMenuItem());
+            final JMenuItem mi = pm == null ? menu.add(new JMenuItem()) : pm.add(new JMenuItem());
             mi.setText(me.getName());
+            mi.addActionListener(new AbstractAction() {
+                @Override
+                void actionPerformed(ActionEvent e) {
+                    println("PEPE");
+                }
+            });
         }
     }
 }
