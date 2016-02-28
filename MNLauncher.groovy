@@ -20,7 +20,7 @@
  *  Created by Marc Nuri on 2016-02-21.
  */
 
-import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.core.type.TypeReference
 @Grab(group='com.fasterxml.jackson.core', module='jackson-core', version='2.7.1')
 @Grab(group='com.fasterxml.jackson.core', module='jackson-databind', version='2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -67,12 +67,26 @@ private JFrame initFrame() {
 private JPopupMenu initMenu() {
     final JPopupMenu menu = new JPopupMenu();
     final ObjectMapper om = new ObjectMapper();
-    final JsonNode m = om.readTree(new File("menu.json"));
-
-    menu.add(new JMenuItem("Test"));
-    menu.add(new JSeparator());
+    final java.util.List<MenuEntry> entries = om.readValue(new File(Constants.MENU_URL), new TypeReference<java.util.List<MenuEntry>>(){});
+    processMenu(entries, menu, null);
     return menu;
 }
+
+private void processMenu(Collection<MenuEntry> c, JPopupMenu pm,JMenu menu){
+    for(MenuEntry me : c){
+        //Menu with Children
+        if(me.getEntries() != null && !me.getEntries().isEmpty()){
+            final JMenu m = pm == null ? menu.add(new JMenu()) : pm.add(new JMenu());
+            m.setText(me.getName());
+            processMenu(me.getEntries(), null, m);
+        } //Standard Menu Entry
+        else {
+            final JMenuItem mi = pm == null ? menu.add(new JMenu()) : pm.add(new JMenuItem());
+            mi.setText(me.getName());
+        }
+    }
+}
+
 
 private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
     return new MouseAdapter() {
@@ -115,4 +129,34 @@ private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
             }
         }
     };
+}
+
+class MenuEntry {
+    private String name;
+    private String command;
+    private java.util.List<MenuEntry> entries;
+
+    String getName() {
+        return name
+    }
+
+    void setName(String name) {
+        this.name = name
+    }
+
+    String getCommand() {
+        return command
+    }
+
+    void setCommand(String command) {
+        this.command = command
+    }
+
+    java.util.List<MenuEntry> getEntries() {
+        return entries
+    }
+
+    void setEntries(java.util.List<MenuEntry> entries) {
+        this.entries = entries
+    }
 }
