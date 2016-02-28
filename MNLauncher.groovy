@@ -29,6 +29,7 @@ import javax.imageio.ImageIO
 import javax.swing.*
 import java.awt.*
 import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 
@@ -84,24 +85,23 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm,JMenu menu){
         else {
             final JMenuItem mi = pm == null ? menu.add(new JMenuItem()) : pm.add(new JMenuItem());
             mi.setText(me.getName());
-            mi.addActionListener(new AbstractAction() {
-                @Override
-                void actionPerformed(ActionEvent e) {
-                    runProcess(me.getCommand());
-                }
-            });
+            mi.addActionListener(prepareAction(me));
         }
     }
 }
-
-private void runProcess(String command){
-    final Process p = new ProcessBuilder(command)
-            .redirectErrorStream(true)
-            .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-            .redirectInput(ProcessBuilder.Redirect.INHERIT)
-            .redirectError(ProcessBuilder.Redirect.INHERIT)
-            .inheritIO()
-            .start();
+private ActionListener prepareAction(MenuEntry me){
+    new AbstractAction() {
+        @Override
+        void actionPerformed(ActionEvent e) {
+            final Process p = new ProcessBuilder(me.getCommand())
+                    .redirectErrorStream(true)
+                    .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                    .redirectInput(ProcessBuilder.Redirect.INHERIT)
+                    .redirectError(ProcessBuilder.Redirect.INHERIT)
+                    .inheritIO()
+                    .start();
+        }
+    }
 }
 
 private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
