@@ -21,9 +21,10 @@
  */
 
 import com.fasterxml.jackson.core.type.TypeReference
-@Grab(group='com.fasterxml.jackson.core', module='jackson-core', version='2.7.1')
-@Grab(group='com.fasterxml.jackson.core', module='jackson-databind', version='2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
+import sun.awt.shell.ShellFolder
 
 import javax.imageio.ImageIO
 import javax.swing.*
@@ -69,15 +70,16 @@ private JFrame initFrame() {
 private JPopupMenu initMenu() {
     final JPopupMenu menu = new JPopupMenu();
     final ObjectMapper om = new ObjectMapper();
-    final java.util.List<MenuEntry> entries = om.readValue(new File(Constants.MENU_URL), new TypeReference<java.util.List<MenuEntry>>(){});
+    final java.util.List<MenuEntry> entries = om.readValue(new File(Constants.MENU_URL), new TypeReference<java.util.List<MenuEntry>>() {
+    });
     processMenu(entries, menu, null);
     return menu;
 }
 
-private void processMenu(Collection<MenuEntry> c, JPopupMenu pm,JMenu menu){
-    for(MenuEntry me : c){
+private void processMenu(Collection<MenuEntry> c, JPopupMenu pm, JMenu menu) {
+    for (MenuEntry me : c) {
         //Menu with Children
-        if(me.getEntries() != null && !me.getEntries().isEmpty()){
+        if (me.getEntries() != null && !me.getEntries().isEmpty()) {
             final JMenu m = pm == null ? menu.add(new JMenu()) : pm.add(new JMenu());
             m.setText(me.getName());
             processMenu(me.getEntries(), null, m);
@@ -86,10 +88,20 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm,JMenu menu){
             final JMenuItem mi = pm == null ? menu.add(new JMenuItem()) : pm.add(new JMenuItem());
             mi.setText(me.getName());
             mi.addActionListener(prepareAction(me));
+            //Get Icon
+            if (me.getCommand().toLowerCase().endsWith("exe")) {
+                final File fCommand = new File(me.getCommand());
+                if (fCommand.exists()) {
+                    mi.setIcon(new ImageIcon(
+                            ShellFolder.getShellFolder(fCommand).getIcon(true)
+                                    .getScaledInstance(Constants.M_WIDTH, Constants.M_HEIGHT, Image.SCALE_SMOOTH)));
+                }
+            }
         }
     }
 }
-private ActionListener prepareAction(MenuEntry me){
+
+private ActionListener prepareAction(MenuEntry me) {
     new AbstractAction() {
         @Override
         void actionPerformed(ActionEvent e) {
