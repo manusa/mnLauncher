@@ -1,15 +1,18 @@
-[
-  {
-    "name": "Notepad",
-    "command": "C:\\Program Files (x86)\\PSPad editor\\PSPad.exe"
-  },
-  {
-    "name": "IDEs",
-    "entries": [
-      {
-        "name": "NetBeans",
-        "command": "C:\\Program Files\\Java\\NetBeans 8.1\\bin\\netbeans64.exe"
-      }
-    ]
-  }
-]
+{
+  "name": "ROOT",
+  "entries": [
+    {
+      "name": "Notepad",
+      "command": "C:\\Program Files (x86)\\PSPad editor\\PSPad.exe"
+    },
+    {
+      "name": "IDEs",
+      "entries": [
+        {
+          "name": "NetBeans",
+          "command": "C:\\Program Files\\Java\\NetBeans 8.1\\bin\\netbeans64.exe"
+        }
+      ]
+    }
+  ]
+}

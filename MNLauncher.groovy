@@ -19,8 +19,6 @@
  *
  *  Created by Marc Nuri on 2016-02-21.
  */
-
-import com.fasterxml.jackson.core.type.TypeReference
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -39,7 +37,7 @@ class Constants {
     final static String TITLE = "mnLauncher";
     final static int S_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     final static int S_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
-    final static int M_HEIGHT = 25, M_WIDTH = 25;
+    final static int M_HEIGHT = 26, M_WIDTH = 26;
     final static int M_ICON_HEIGHT = 20, M_ICON_WIDTH = 20;
     final static Color MENU_COLOR = Color.WHITE;
     final static Color MENU_BACKGROUND = Color.DARK_GRAY;
@@ -64,7 +62,7 @@ private JFrame initFrame() {
     //Background Icon
     final JLabel icon = new JLabel();
     icon.setIcon(new ImageIcon(logo
-            .getScaledInstance(Constants.M_ICON_WIDTH, Constants.M_ICON_HEIGHT, Image.SCALE_SMOOTH)));
+            .getScaledInstance(Constants.M_WIDTH, Constants.M_HEIGHT, Image.SCALE_SMOOTH)));
     frame.add(icon, BorderLayout.CENTER);
     frame.pack();
     final JPopupMenu menu = initMenu();
@@ -81,9 +79,8 @@ private JPopupMenu initMenu() {
     menu.setBackground(Constants.MENU_BACKGROUND);
     menu.setBorderPainted(false);
     final ObjectMapper om = new ObjectMapper();
-    final java.util.List<MenuEntry> entries = om.readValue(new File(Constants.MENU_URL), new TypeReference<java.util.List<MenuEntry>>() {
-    });
-    processMenu(entries, menu, null);
+    final MenuEntry root = om.readValue(new File(Constants.MENU_URL), MenuEntry.class);
+    processMenu(root.getEntries(), menu, null);
     return menu;
 }
 
@@ -113,7 +110,7 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm, JMenu menu) {
                 if (fCommand.exists()) {
                     mi.setIcon(new ImageIcon(
                             ShellFolder.getShellFolder(fCommand).getIcon(true)
-                                    .getScaledInstance(Constants.M_WIDTH, Constants.M_HEIGHT, Image.SCALE_SMOOTH)));
+                                    .getScaledInstance(Constants.M_ICON_WIDTH, Constants.M_ICON_HEIGHT, Image.SCALE_SMOOTH)));
                 }
             }
         }
