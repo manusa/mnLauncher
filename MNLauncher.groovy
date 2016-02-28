@@ -87,13 +87,22 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm,JMenu menu){
             mi.addActionListener(new AbstractAction() {
                 @Override
                 void actionPerformed(ActionEvent e) {
-                    println("PEPE");
+                    runProcess(me.getCommand());
                 }
             });
         }
     }
 }
 
+private void runProcess(String command){
+    final Process p = new ProcessBuilder(command)
+            .redirectErrorStream(true)
+            .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+            .redirectInput(ProcessBuilder.Redirect.INHERIT)
+            .redirectError(ProcessBuilder.Redirect.INHERIT)
+            .inheritIO()
+            .start();
+}
 
 private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
     return new MouseAdapter() {
