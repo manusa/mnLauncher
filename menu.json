@@ -2,8 +2,12 @@
   "name": "ROOT",
   "entries": [
     {
-      "name": "Notepad",
+      "name": "PSPad",
       "command": "C:\\Program Files (x86)\\PSPad editor\\PSPad.exe"
+    },
+    {
+      "name": "Notepad",
+      "command": ["Notepad.exe", "pepe.txt"]
     },
     {
       "name": "IDEs",

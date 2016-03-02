@@ -105,8 +105,8 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm, JMenu menu) {
             mi.setForeground(Constants.MENU_COLOR);
             mi.addActionListener(prepareAction(me));
             //Get Icon
-            if (me.getCommand().toLowerCase().endsWith("exe")) {
-                final File fCommand = new File(me.getCommand());
+            if (me.getFirstCommand().toLowerCase().endsWith("exe")) {
+                final File fCommand = new File(me.getFirstCommand());
                 if (fCommand.exists()) {
                     mi.setIcon(new ImageIcon(
                             ShellFolder.getShellFolder(fCommand).getIcon(true)
@@ -177,7 +177,7 @@ private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
 
 class MenuEntry {
     private String name;
-    private String command;
+    private Object command;
     private java.util.List<MenuEntry> entries;
 
     String getName() {
@@ -188,12 +188,15 @@ class MenuEntry {
         this.name = name
     }
 
-    String getCommand() {
+    Object getCommand() {
         return command
     }
 
-    void setCommand(String command) {
+    void setCommand(Object command) {
         this.command = command
+    }
+    String getFirstCommand(){
+       return command instanceof List ?((List) command).iterator().next() : command;
     }
 
     java.util.List<MenuEntry> getEntries() {
