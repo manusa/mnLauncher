@@ -22,6 +22,9 @@
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
 import sun.awt.shell.ShellFolder
 
 import javax.imageio.ImageIO
@@ -35,8 +38,8 @@ import java.awt.image.BufferedImage
 
 class Constants {
     final static String TITLE = "mnLauncher";
-    final static int S_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
-    final static int S_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
+//    final static int S_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
+//    final static int S_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     final static int M_HEIGHT = 26, M_WIDTH = 26;
     final static int M_ICON_HEIGHT = 20, M_ICON_WIDTH = 20;
     final static Color MENU_COLOR = Color.WHITE;
@@ -46,7 +49,7 @@ class Constants {
 
 }
 
-
+//noinspection GroovyUnusedAssignment
 final JFrame frame = initFrame();
 
 private JFrame initFrame() {
@@ -88,7 +91,7 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm, JMenu menu) {
     for (MenuEntry me : c) {
         //Menu with Children
         if (me.getEntries() != null && !me.getEntries().isEmpty()) {
-            final JMenu m = pm == null ? menu.add(new JMenu()) : pm.add(new JMenu());
+            final JMenu m = (pm == null ? menu.add(new JMenu()) : pm.add(new JMenu())) as JMenu;
             m.setText(me.getName());
             m.setForeground(Constants.MENU_COLOR);
             m.setBackground(Constants.MENU_BACKGROUND);
@@ -118,12 +121,13 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm, JMenu menu) {
     }
 }
 
+@SuppressWarnings("GroovyUnusedAssignment")
 private ActionListener prepareAction(MenuEntry me) {
     new AbstractAction() {
         @Override
         void actionPerformed(ActionEvent e) {
             System.out.println("Running Command "+me.getCommand());
-            final Process p = new ProcessBuilder(me.getCommand())
+            final Process p = new ProcessBuilder(me.getCommand() as java.util.List<String>)
                     .redirectErrorStream(true)
                     .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                     .redirectInput(ProcessBuilder.Redirect.INHERIT)
@@ -177,6 +181,7 @@ private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
     };
 }
 
+@SuppressWarnings("GroovyUnusedDeclaration")
 class MenuEntry {
     private String name;
     private Object command;
