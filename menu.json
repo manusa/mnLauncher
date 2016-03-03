@@ -7,7 +7,10 @@
     },
     {
       "name": "Notepad",
-      "command": ["Notepad.exe", "pepe.txt"]
+      "command": [
+        "Notepad.exe",
+        "pepe.txt"
+      ]
     },
     {
       "name": "IDEs",
@@ -15,6 +18,26 @@
         {
           "name": "NetBeans",
           "command": "C:\\Program Files\\Java\\NetBeans 8.1\\bin\\netbeans64.exe"
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "entries": [
+        {
+          "name": "Notepad",
+          "command": [
+            "Notepad.exe",
+            "pepe.txt"
+          ]
+        },
+
+        {
+          "name": "Windows",
+          "command": [
+            "explorer.exe",
+            "C:\\Windows\\"
+          ]
         }
       ]
     }

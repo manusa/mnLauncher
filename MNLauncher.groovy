@@ -106,6 +106,7 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm, JMenu menu) {
             mi.addActionListener(prepareAction(me));
             //Get Icon
             if (me.getFirstCommand().toLowerCase().endsWith("exe")) {
+                System.out.println("Loading Icon for: "+me.getFirstCommand());
                 final File fCommand = new File(me.getFirstCommand());
                 if (fCommand.exists()) {
                     mi.setIcon(new ImageIcon(
@@ -121,6 +122,7 @@ private ActionListener prepareAction(MenuEntry me) {
     new AbstractAction() {
         @Override
         void actionPerformed(ActionEvent e) {
+            System.out.println("Running Command "+me.getCommand());
             final Process p = new ProcessBuilder(me.getCommand())
                     .redirectErrorStream(true)
                     .redirectOutput(ProcessBuilder.Redirect.INHERIT)
