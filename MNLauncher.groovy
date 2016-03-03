@@ -25,11 +25,19 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
 import sun.awt.shell.ShellFolder
 
 import javax.imageio.ImageIO
 import javax.swing.*
-import java.awt.*
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.Image
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.event.MouseAdapter
@@ -109,7 +117,7 @@ private void processMenu(Collection<MenuEntry> c, JPopupMenu pm, JMenu menu) {
             mi.addActionListener(prepareAction(me));
             //Get Icon
             if (me.getFirstCommand().toLowerCase().endsWith("exe")) {
-                System.out.println("Loading Icon for: "+me.getFirstCommand());
+                System.out.println("Loading Icon for: " + me.getFirstCommand());
                 final File fCommand = new File(me.getFirstCommand());
                 if (fCommand.exists()) {
                     mi.setIcon(new ImageIcon(
@@ -126,9 +134,14 @@ private ActionListener prepareAction(MenuEntry me) {
     new AbstractAction() {
         @Override
         void actionPerformed(ActionEvent e) {
-            System.out.println("Running Command "+me.getCommand());
-            final Process p = new ProcessBuilder(me.getCommand() as java.util.List<String>)
-                    .redirectErrorStream(true)
+            System.out.println("Running Command " + me.getCommand());
+            final ProcessBuilder pb;
+            if (me.getCommand() instanceof String) {
+                pb = new ProcessBuilder(me.getCommand() as String);
+            } else {
+                pb = new ProcessBuilder(me.getCommand() as List<String>);
+            }
+            pb.redirectErrorStream(true)
                     .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                     .redirectInput(ProcessBuilder.Redirect.INHERIT)
                     .redirectError(ProcessBuilder.Redirect.INHERIT)
@@ -185,7 +198,7 @@ private MouseAdapter initMouseAdapter(final JPopupMenu menu) {
 class MenuEntry {
     private String name;
     private Object command;
-    private java.util.List<MenuEntry> entries;
+    private List<MenuEntry> entries;
 
     String getName() {
         return name
@@ -202,15 +215,16 @@ class MenuEntry {
     void setCommand(Object command) {
         this.command = command
     }
-    String getFirstCommand(){
-       return command instanceof List ?((List) command).iterator().next() : command;
+
+    String getFirstCommand() {
+        return command instanceof List ? ((List) command).iterator().next() : command;
     }
 
-    java.util.List<MenuEntry> getEntries() {
+    List<MenuEntry> getEntries() {
         return entries
     }
 
-    void setEntries(java.util.List<MenuEntry> entries) {
+    void setEntries(List<MenuEntry> entries) {
         this.entries = entries
     }
 }
