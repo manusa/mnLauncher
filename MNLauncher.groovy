@@ -31,18 +31,26 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
 import sun.awt.shell.ShellFolder
 
 import javax.imageio.ImageIO
 import javax.swing.*
-import java.awt.BorderLayout
-import java.awt.Color
-import java.awt.Image
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
+import java.util.List
 
 class Constants {
     final static String TITLE = "mnLauncher";
@@ -134,13 +142,8 @@ private ActionListener prepareAction(MenuEntry me) {
     new AbstractAction() {
         @Override
         void actionPerformed(ActionEvent e) {
-            System.out.println("Running Command " + me.getCommand());
-            final ProcessBuilder pb;
-            if (me.getCommand() instanceof String) {
-                pb = new ProcessBuilder(me.getCommand() as String);
-            } else {
-                pb = new ProcessBuilder(me.getCommand() as List<String>);
-            }
+            System.out.println("Running Command " + me.getFirstCommand());
+            final ProcessBuilder pb = new ProcessBuilder(me.getCommand());
             pb.redirectErrorStream(true)
                     .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                     .redirectInput(ProcessBuilder.Redirect.INHERIT)
@@ -208,8 +211,8 @@ class MenuEntry {
         this.name = name
     }
 
-    Object getCommand() {
-        return command
+    List<String> getCommand() {
+        return command instanceof List ? command : Arrays.asList(command)
     }
 
     void setCommand(Object command) {
