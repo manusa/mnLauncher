@@ -52,21 +52,42 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.util.logging.Log
 import sun.awt.shell.ShellFolder
 
 import javax.imageio.ImageIO
 import javax.swing.*
-import java.awt.*
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.Image
 import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Script
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 def mnLauncher = new Launcher();
 mnLauncher.run();
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Other Classes
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @Log
 class Launcher extends Script {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,13 +103,6 @@ class Launcher extends Script {
     final static String ICON_URL = "favicon.png";
     final static String MENU_URL = "menu.json";
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Script
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Methods
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     def run() {
 //noinspection GroovyUnusedAssignment
         final JFrame frame = initFrame();
@@ -126,6 +140,7 @@ class Launcher extends Script {
         menu.setBorderPainted(false);
         final ObjectMapper om = new ObjectMapper();
         final MenuEntry root = om.readValue(new File(MENU_URL), MenuEntry.class);
+        log.info("Loaded menues");
         processMenu(root.getEntries(), menu, null);
         return menu;
     }
@@ -149,10 +164,10 @@ class Launcher extends Script {
                 mi.setBackground(MENU_BACKGROUND);
                 mi.setBorderPainted(false);
                 mi.setForeground(MENU_COLOR);
-                mi.addActionListener(prepareAction(me));
+                mi.addActionListener(new LauncherActionListener(me));
                 //Get Icon
                 if (me.getFirstCommand().toLowerCase().endsWith("exe")) {
-                    System.out.println("Loading Icon for: " + me.getFirstCommand());
+                    log.info("Loading icon for: " + me.getName());
                     final File fCommand = new File(me.getFirstCommand());
                     if (fCommand.exists()) {
                         mi.setIcon(new ImageIcon(
@@ -161,25 +176,10 @@ class Launcher extends Script {
                     }
                 }
             }
+            log.info("Loaded menu " + me.getName());
         }
     }
 
-    @SuppressWarnings("GroovyUnusedAssignment")
-    ActionListener prepareAction(MenuEntry me) {
-        new AbstractAction() {
-            @Override
-            void actionPerformed(ActionEvent e) {
-                System.out.println("Running Command " + me.getFirstCommand());
-                final ProcessBuilder pb = new ProcessBuilder(me.getCommand());
-                pb.redirectErrorStream(true)
-                        .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-                        .redirectInput(ProcessBuilder.Redirect.INHERIT)
-                        .redirectError(ProcessBuilder.Redirect.INHERIT)
-                        .inheritIO()
-                        .start();
-            }
-        }
-    }
 
     MouseAdapter initMouseAdapter(final JPopupMenu menu) {
         return new MouseAdapter() {
@@ -226,14 +226,32 @@ class Launcher extends Script {
 
 
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Other Classes
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+@Log
+@SuppressWarnings("GroovyUnusedAssignment")
+class LauncherActionListener extends  AbstractAction {
+    final List<String> command;
+    LauncherActionListener(MenuEntry menuEntry){
+        this.command = menuEntry.getCommand();
+    }
+    @Override
+    void actionPerformed(ActionEvent e) {
+        log.info("Running " + command);
+        final ProcessBuilder pb = new ProcessBuilder(command);
+        pb.redirectErrorStream(true)
+                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                .redirectInput(ProcessBuilder.Redirect.INHERIT)
+                .redirectError(ProcessBuilder.Redirect.INHERIT)
+                .inheritIO()
+                .start();
+        log.info("Started " + command);
+    }
+}
+
 @SuppressWarnings("GroovyUnusedDeclaration")
 class MenuEntry {
     private String name;
     private Object command;
-    private java.util.List<MenuEntry> entries;
+    private List<MenuEntry> entries;
 
     String getName() {
         return name
@@ -243,8 +261,8 @@ class MenuEntry {
         this.name = name
     }
 
-    java.util.List<String> getCommand() {
-        return command instanceof java.util.List ? command : Arrays.asList(command)
+    List<String> getCommand() {
+        return command instanceof List ? command : Arrays.asList(command)
     }
 
     void setCommand(Object command) {
@@ -252,14 +270,14 @@ class MenuEntry {
     }
 
     String getFirstCommand() {
-        return command instanceof java.util.List ? ((java.util.List) command).iterator().next() : command;
+        return command instanceof List ? ((List) command).iterator().next() : command;
     }
 
-    java.util.List<MenuEntry> getEntries() {
+    List<MenuEntry> getEntries() {
         return entries
     }
 
-    void setEntries(java.util.List<MenuEntry> entries) {
+    void setEntries(List<MenuEntry> entries) {
         this.entries = entries
     }
 }
