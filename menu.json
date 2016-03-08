@@ -31,7 +31,12 @@
             "pepe.txt"
           ]
         },
-
+        {
+          "name": "CMD",
+          "command": [
+            "cmd.exe", "/k", "start" , "cmd.exe"
+          ]
+        },
         {
           "name": "Windows",
           "command": [
