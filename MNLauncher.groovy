@@ -22,54 +22,6 @@
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
-import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.util.logging.Log
 import sun.awt.shell.ShellFolder
 
