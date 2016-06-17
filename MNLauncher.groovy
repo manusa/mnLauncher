@@ -67,18 +67,21 @@ import com.fasterxml.jackson.databind.ObjectMapper
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
 @Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
 import com.fasterxml.jackson.databind.ObjectMapper
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
+@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.util.logging.Log
 import sun.awt.shell.ShellFolder
 
 import javax.imageio.ImageIO
 import javax.swing.*
-import java.awt.BorderLayout
-import java.awt.Color
-import java.awt.Image
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
+import java.util.List
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Script
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,6 +105,7 @@ class Launcher extends Script {
     final static Color MENU_BACKGROUND = Color.DARK_GRAY;
     final static String ICON_URL = "favicon.png";
     final static String MENU_URL = "menu.json";
+    final static String GROOVY_EXTENSION = ".groovy";
 
     def run() {
 //noinspection GroovyUnusedAssignment
@@ -226,23 +230,35 @@ class Launcher extends Script {
 
 
 }
+
 @Log
 @SuppressWarnings("GroovyUnusedAssignment")
-class LauncherActionListener extends  AbstractAction {
+class LauncherActionListener extends AbstractAction {
     final List<String> command;
-    LauncherActionListener(MenuEntry menuEntry){
+
+    LauncherActionListener(MenuEntry menuEntry) {
         this.command = menuEntry.getCommand();
     }
+
     @Override
     void actionPerformed(ActionEvent e) {
         log.info("Running " + command);
-        final ProcessBuilder pb = new ProcessBuilder(command);
-        pb.redirectErrorStream(true)
-                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-                .redirectInput(ProcessBuilder.Redirect.INHERIT)
-                .redirectError(ProcessBuilder.Redirect.INHERIT)
-                .inheritIO()
-                .start();
+        //Command is a groovy script
+        if (command.iterator().next().toLowerCase().endsWith(Launcher.GROOVY_EXTENSION)) {
+            final File gsFile = new File(command.iterator().next());
+            final List<String> args = command.size() > 1 ? command.subList(1, command.size()) : Collections.<String> emptyList();
+            new GroovyShell().run(gsFile, args);
+        }
+        //Command is a process
+        else {
+            final ProcessBuilder pb = new ProcessBuilder(command);
+            pb.redirectErrorStream(true)
+                    .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                    .redirectInput(ProcessBuilder.Redirect.INHERIT)
+                    .redirectError(ProcessBuilder.Redirect.INHERIT)
+                    .inheritIO()
+                    .start();
+        }
         log.info("Started " + command);
     }
 }

@@ -1,6 +1,9 @@
 {
   "name": "ROOT",
   "entries": [
+    {"name":"Groovy Test",
+      "command":"D:\\0_JAVA\\0_groovys\\stackoverflow\\JacksonStringEscape.groovy"
+    },
     {
       "name": "PSPad",
       "command": "C:\\Program Files (x86)\\PSPad editor\\PSPad.exe"
