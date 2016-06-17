@@ -97,7 +97,7 @@ class Launcher extends Script {
 //    final static int S_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
 //    final static int S_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     final static int M_HEIGHT = 26, M_WIDTH = 26;
-    final static int M_ICON_HEIGHT = 20, M_ICON_WIDTH = 20;
+    final static int M_ICON_HEIGHT = 18, M_ICON_WIDTH = 18;
     final static Color MENU_COLOR = Color.WHITE;
     final static Color MENU_BACKGROUND = Color.DARK_GRAY;
     final static String ICON_URL = "favicon.png";
@@ -140,7 +140,7 @@ class Launcher extends Script {
         menu.setBorderPainted(false);
         final ObjectMapper om = new ObjectMapper();
         final MenuEntry root = om.readValue(new File(MENU_URL), MenuEntry.class);
-        log.info("Loaded menues");
+        log.info("Loaded menus");
         processMenu(root.getEntries(), menu, null);
         return menu;
     }
