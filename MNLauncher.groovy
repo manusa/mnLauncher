@@ -31,6 +31,8 @@ import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import java.awt.event.WindowAdapter
+import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
 import java.util.List
 
@@ -81,11 +83,23 @@ class Launcher extends Script {
                 .getScaledInstance(M_WIDTH, M_HEIGHT, Image.SCALE_SMOOTH)));
         frame.add(icon, BorderLayout.CENTER);
         frame.pack();
+        //Add popup menu
         final JPopupMenu menu = initMenu();
         frame.add(menu);
+        //Mouse Events
         final MouseAdapter mouseAdapter = initMouseAdapter(menu);
         frame.addMouseMotionListener(mouseAdapter);
         frame.addMouseListener(mouseAdapter);
+        //Windows event
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            void windowLostFocus(WindowEvent e) {
+                //AlwaysOnTop property can only be assigned to a window.
+                //We reset this state so that if any other window gathers the property we recover it.
+                e.getWindow().setAlwaysOnTop(false);
+                e.getWindow().setAlwaysOnTop(true);
+            }
+        });
         return frame;
     }
 
