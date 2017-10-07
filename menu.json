@@ -1,0 +1,53 @@
+{
+  "name": "ROOT",
+  "entries": [
+    {"name":"Groovy Test",
+      "command":"D:\\0_JAVA\\0_groovys\\stackoverflow\\JacksonStringEscape.groovy"
+    },
+    {
+      "name": "PSPad",
+      "command": "C:\\Program Files (x86)\\PSPad editor\\PSPad.exe"
+    },
+    {
+      "name": "Notepad",
+      "command": [
+        "Notepad.exe",
+        "pepe.txt"
+      ]
+    },
+    {
+      "name": "IDEs",
+      "entries": [
+        {
+          "name": "NetBeans",
+          "command": "C:\\Program Files\\Java\\NetBeans 8.1\\bin\\netbeans64.exe"
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "entries": [
+        {
+          "name": "Notepad",
+          "command": [
+            "Notepad.exe",
+            "pepe.txt"
+          ]
+        },
+        {
+          "name": "CMD",
+          "command": [
+            "cmd.exe", "/k", "start" , "cmd.exe"
+          ]
+        },
+        {
+          "name": "Windows",
+          "command": [
+            "explorer.exe",
+            "C:\\Windows\\"
+          ]
+        }
+      ]
+    }
+  ]
+}
