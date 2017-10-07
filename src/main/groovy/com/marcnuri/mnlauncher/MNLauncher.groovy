@@ -19,8 +19,9 @@
  *
  *  Created by Marc Nuri on 2016-02-21.
  */
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-core', version = '2.7.1')
-@Grab(group = 'com.fasterxml.jackson.core', module = 'jackson-databind', version = '2.7.1')
+package com.marcnuri.mnlauncher
+
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import groovy.util.logging.Log
 import sun.awt.shell.ShellFolder
@@ -57,7 +58,7 @@ class Launcher extends Script {
     final static int M_ICON_HEIGHT = 18, M_ICON_WIDTH = 18;
     final static Color MENU_COLOR = Color.WHITE;
     final static Color MENU_BACKGROUND = Color.DARK_GRAY;
-    final static String ICON_URL = "favicon.png";
+    final static String ICON_URL = "/favicon.png";
     final static String MENU_URL = "menu.json";
     final static String GROOVY_EXTENSION = ".groovy";
 
@@ -73,7 +74,7 @@ class Launcher extends Script {
         frame.setAlwaysOnTop(true);
         frame.setUndecorated(true);
         frame.setVisible(true);
-        final BufferedImage logo = ImageIO.read(new File(ICON_URL));
+        final BufferedImage logo = ImageIO.read(com.marcnuri.mnlauncher.MNLauncher.class.getResource(ICON_URL));
         //Taskbar Icon
         frame.setIconImage(logo);
         log.info("Loaded frame");
