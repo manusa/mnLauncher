@@ -19,7 +19,7 @@ class LauncherActionListener extends AbstractAction {
 
 	@Override
 	void actionPerformed(ActionEvent e) {
-		log.info("Running " + command)
+		log.info("Running $command")
 		//Command is a groovy script
 		if ((++command.iterator()).toLowerCase().endsWith(Launcher.GROOVY_EXTENSION)) {
 			final File gsFile = new File(++command.iterator())
@@ -37,6 +37,6 @@ class LauncherActionListener extends AbstractAction {
 					.inheritIO()
 					.start()
 		}
-		log.info("Started " + command)
+		log.info("Started $command")
 	}
 }

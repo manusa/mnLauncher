@@ -22,6 +22,7 @@
 package com.marcnuri.mnlauncher
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.marcnuri.mnlauncher.icon.IconProvider
 import groovy.util.logging.Log
 import sun.awt.shell.ShellFolder
 
@@ -51,11 +52,10 @@ class Launcher extends Script {
 //    final static int S_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width
 //    final static int S_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height
 	final static int M_HEIGHT = 26, M_WIDTH = 26
-	final static int M_ICON_HEIGHT = 18, M_ICON_WIDTH = 18
 	final static Color MENU_COLOR = Color.WHITE
 	final static Color MENU_BACKGROUND = Color.DARK_GRAY
 	final static String ICON_FILE_NAME = "favicon.png"
-	final static String ICON_RESOURCE_URL = "/" + Launcher.ICON_FILE_NAME
+	final static String ICON_RESOURCE_URL = "/$Launcher.ICON_FILE_NAME"
 	final static String MENU_URL = "menu.json"
 	final static String GROOVY_EXTENSION = ".groovy"
 
@@ -144,7 +144,7 @@ class Launcher extends Script {
 					if (fCommand.exists()) {
 						mi.setIcon(new ImageIcon(
 								ShellFolder.getShellFolder(fCommand).getIcon(true)
-										.getScaledInstance(M_ICON_WIDTH, M_ICON_HEIGHT, Image.SCALE_SMOOTH)))
+										.getScaledInstance(IconProvider.M_ICON_WIDTH, IconProvider.M_ICON_HEIGHT, Image.SCALE_SMOOTH)))
 					}
 				}
 			}
