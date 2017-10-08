@@ -54,7 +54,8 @@ class Launcher extends Script {
 	final static int M_ICON_HEIGHT = 18, M_ICON_WIDTH = 18
 	final static Color MENU_COLOR = Color.WHITE
 	final static Color MENU_BACKGROUND = Color.DARK_GRAY
-	final static String ICON_URL = "/favicon.png"
+	final static String ICON_FILE_NAME = "favicon.png"
+	final static String ICON_RESOURCE_URL = "/" + Launcher.ICON_FILE_NAME
 	final static String MENU_URL = "menu.json"
 	final static String GROOVY_EXTENSION = ".groovy"
 
@@ -70,7 +71,11 @@ class Launcher extends Script {
 		frame.setAlwaysOnTop(true)
 		frame.setUndecorated(true)
 		frame.setVisible(true)
-		final BufferedImage logo = ImageIO.read(MNLauncher.class.getResource(ICON_URL))
+		final File faviconFile = new File(ICON_FILE_NAME)
+		final BufferedImage logo = ImageIO.read(
+				faviconFile.exists() ?
+				faviconFile.toURI().toURL() :
+				MNLauncher.class.getResource(ICON_RESOURCE_URL))
 		//Taskbar Icon
 		frame.setIconImage(logo)
 		log.info("Loaded frame")
