@@ -17,9 +17,10 @@ class WindowsIconProvider implements IconProvider {
 		log.info("Loading icon for: $menuEntry.getName()")
 		final File fCommand = new File(menuEntry.getFirstCommand())
 		if (fCommand.exists()) {
-			ret = new ImageIcon(
-					ShellFolder.getShellFolder(fCommand).getIcon(true)
-							.getScaledInstance(M_ICON_WIDTH, M_ICON_HEIGHT, Image.SCALE_SMOOTH))
+			final Image icon = ShellFolder.getShellFolder(fCommand).getIcon(true)
+			ret = icon != null ? new ImageIcon(icon.
+					getScaledInstance(M_ICON_WIDTH, M_ICON_HEIGHT, Image.SCALE_SMOOTH))
+					: null
 		}
 		return ret
 	}

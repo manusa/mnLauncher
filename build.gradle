@@ -14,10 +14,10 @@ dependencies {
 }
 
 
-sourceCompatibility = 1.7
+sourceCompatibility = 1.8
 targetCompatibility = 1.6
 
-mainClassName = "com.marcnuri.mnlauncher.MNLauncher"
+mainClassName = "com.marcnuri.mnlauncher.Launcher"
 
 jar {
 	archiveName = project.name+".jar"

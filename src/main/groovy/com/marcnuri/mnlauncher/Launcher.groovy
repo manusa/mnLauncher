@@ -23,28 +23,23 @@ package com.marcnuri.mnlauncher
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.marcnuri.mnlauncher.icon.IconProvider
+import com.marcnuri.mnlauncher.icon.WindowsIconProvider
 import groovy.util.logging.Log
 import sun.awt.shell.ShellFolder
 
 import javax.imageio.ImageIO
 import javax.swing.*
-import java.awt.*
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.Image
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Script
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-def mnLauncher = new Launcher()
-mnLauncher.run()
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Other Classes
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 @Log
-class Launcher extends Script {
+class Launcher {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,11 +50,16 @@ class Launcher extends Script {
 	final static Color MENU_COLOR = Color.WHITE
 	final static Color MENU_BACKGROUND = Color.DARK_GRAY
 	final static String ICON_FILE_NAME = "favicon.png"
-	final static String ICON_RESOURCE_URL = "/$Launcher.ICON_FILE_NAME"
+	final static String ICON_RESOURCE_URL = "/$ICON_FILE_NAME"
 	final static String MENU_URL = "menu.json"
 	final static String GROOVY_EXTENSION = ".groovy"
+	final static List<IconProvider> ICON_PROVIDERS = Arrays.asList(new WindowsIconProvider())
 
-	def run() {
+	static void main(String[] args) {
+		new Launcher()
+	}
+
+	Launcher() {
 //noinspection GroovyUnusedAssignment
 		final JFrame frame = initFrame()
 	}
@@ -137,16 +137,11 @@ class Launcher extends Script {
 				mi.setBorderPainted(false)
 				mi.setForeground(MENU_COLOR)
 				mi.addActionListener(new LauncherActionListener(me))
-				//Get Icon
-				if (me.getFirstCommand().toLowerCase().endsWith("exe")) {
-					log.info("Loading icon for: " + me.getName())
-					final File fCommand = new File(me.getFirstCommand())
-					if (fCommand.exists()) {
-						mi.setIcon(new ImageIcon(
-								ShellFolder.getShellFolder(fCommand).getIcon(true)
-										.getScaledInstance(IconProvider.M_ICON_WIDTH, IconProvider.M_ICON_HEIGHT, Image.SCALE_SMOOTH)))
-					}
-				}
+				// Set icon
+				IconProvider iconProvider =ICON_PROVIDERS.stream()
+						.filter {ip -> ip.applies(me)}
+						.findFirst().orElse(null)
+				mi.setIcon(iconProvider != null ? iconProvider.getIcon(me) : null)
 			}
 			log.info("Loaded menu " + me.getName())
 		}
@@ -195,6 +190,5 @@ class Launcher extends Script {
 			}
 		}
 	}
-
 
 }
