@@ -26,7 +26,7 @@ class MenuEntry {
 	}
 
 	String getFirstCommand() {
-		return command instanceof List ? ((List) command).iterator().next() : command
+		return command instanceof List ? ++((List) command).iterator() : command
 	}
 
 	List<MenuEntry> getEntries() {

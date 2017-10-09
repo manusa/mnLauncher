@@ -23,20 +23,19 @@ package com.marcnuri.mnlauncher
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.marcnuri.mnlauncher.icon.IconProvider
+import com.marcnuri.mnlauncher.icon.LinuxIconProvider
 import com.marcnuri.mnlauncher.icon.WindowsIconProvider
 import groovy.util.logging.Log
-import sun.awt.shell.ShellFolder
 
 import javax.imageio.ImageIO
 import javax.swing.*
-import java.awt.BorderLayout
-import java.awt.Color
-import java.awt.Image
+import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.event.WindowAdapter
 import java.awt.event.WindowEvent
 import java.awt.image.BufferedImage
+import java.util.List
 
 @Log
 class Launcher {
@@ -51,9 +50,10 @@ class Launcher {
 	final static Color MENU_BACKGROUND = Color.DARK_GRAY
 	final static String ICON_FILE_NAME = "favicon.png"
 	final static String ICON_RESOURCE_URL = "/$ICON_FILE_NAME"
+	final static int M_ICON_HEIGHT = 18, M_ICON_WIDTH = 18
 	final static String MENU_URL = "menu.json"
 	final static String GROOVY_EXTENSION = ".groovy"
-	final static List<IconProvider> ICON_PROVIDERS = Arrays.asList(new WindowsIconProvider())
+	final static List<IconProvider> ICON_PROVIDERS = Arrays.asList(new WindowsIconProvider(), new LinuxIconProvider())
 
 	static void main(String[] args) {
 		new Launcher()
@@ -141,7 +141,12 @@ class Launcher {
 				IconProvider iconProvider =ICON_PROVIDERS.stream()
 						.filter {ip -> ip.applies(me)}
 						.findFirst().orElse(null)
-				mi.setIcon(iconProvider != null ? iconProvider.getIcon(me) : null)
+				if (iconProvider != null) {
+					final Image icon = iconProvider.getIcon(me)
+					mi.setIcon(icon != null ? new ImageIcon(
+							icon.getScaledInstance(M_ICON_WIDTH, M_ICON_HEIGHT, Image.SCALE_SMOOTH)) :
+							null)
+				}
 			}
 			log.info("Loaded menu " + me.getName())
 		}
