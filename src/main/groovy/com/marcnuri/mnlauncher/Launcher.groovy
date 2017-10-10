@@ -75,7 +75,7 @@ class Launcher {
 		final BufferedImage logo = ImageIO.read(
 				faviconFile.exists() ?
 				faviconFile.toURI().toURL() :
-				MNLauncher.class.getResource(ICON_RESOURCE_URL))
+				Launcher.class.getResource(ICON_RESOURCE_URL))
 		//Taskbar Icon
 		frame.setIconImage(logo)
 		log.info("Loaded frame")

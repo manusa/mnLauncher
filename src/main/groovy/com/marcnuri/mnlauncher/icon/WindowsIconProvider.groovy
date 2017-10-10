@@ -18,7 +18,7 @@ class WindowsIconProvider implements IconProvider {
 	@Override
 	Image getIcon(MenuEntry menuEntry) {
 		Image ret = null
-		log.info("Loading icon for: $menuEntry.getName()")
+		log.info("Loading icon for: $menuEntry.name")
 		final File fCommand = new File(menuEntry.getFirstCommand())
 		if (fCommand.exists()) {
 			ret = ShellFolder.getShellFolder(fCommand).getIcon(true)
