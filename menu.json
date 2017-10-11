@@ -4,6 +4,43 @@
     {"name":"Groovy Test",
       "command":"D:\\0_JAVA\\0_groovys\\stackoverflow\\JacksonStringEscape.groovy"
     },
+	{
+	  "name": "Cinnamon",
+	  "entries": [
+		{
+		  "name": "IntelliJ IDEA",
+		  "command": "/usr/bin/idea.sh"
+		},
+		{
+		  "name": "Netbeans",
+		  "command": "/usr/bin/netbeans"
+		},
+		{
+		  "name": "Chromium",
+		  "command": "/usr/bin/chromium"
+		},
+		{
+		  "name": "Firefox",
+		  "command": "/usr/bin/firefox"
+		},
+		{
+		  "name": "Htop",
+		  "command": "/usr/bin/htop"
+		},
+		{
+		  "name": "VS Code",
+		  "command": "/usr/bin/code"
+		},
+		{
+		  "name": "Nemo",
+		  "command": "/usr/bin/nemo"
+		},
+		{
+		  "name": "Terminal",
+		  "command": "/usr/bin/gnome-terminal"
+		}
+	  ]
+	},
     {
       "name": "PSPad",
       "command": "C:\\Program Files (x86)\\PSPad editor\\PSPad.exe"
