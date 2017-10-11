@@ -146,6 +146,7 @@ class Launcher {
 					mi.setIcon(icon != null ? new ImageIcon(
 							icon.getScaledInstance(M_ICON_WIDTH, M_ICON_HEIGHT, Image.SCALE_SMOOTH)) :
 							null)
+					if (icon!= null) icon.flush()
 				}
 			}
 			log.info("Loaded menu " + me.getName())
