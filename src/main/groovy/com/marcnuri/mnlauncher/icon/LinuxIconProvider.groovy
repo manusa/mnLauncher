@@ -16,8 +16,9 @@ class LinuxIconProvider implements IconProvider {
 
 	private static final def XDG_DATA_DIRS = System.getenv("XDG_DATA_DIRS")
 	private static final def XDG_DATA_DIRS_ICON_SUFFIX = "/icons"
-	private static final def DEFAULT_THEME_ICONS_DIRECTOERY = "48x48/apps"
-	private static final def XDG_DATA_DIRS_HICOLOR_SUFFIX = "/hicolor/$DEFAULT_THEME_ICONS_DIRECTOERY"
+	private static final def DEFAULT_THEME_ICONS_DIRECTORY = "48x48/apps"
+	private static final def MINT_THEME_ICONS_DIRECTORY = "apps/48"
+	private static final def XDG_DATA_DIRS_HICOLOR_SUFFIX = "/hicolor/$DEFAULT_THEME_ICONS_DIRECTORY"
 	private static final def PIXMAPS = "/usr/share/pixmaps"
 	private static final def SH_SCRIPT_EXTENSION = ".sh"
 	private static final def GSETTINGS_COMMAND = "/usr/bin/gsettings"
@@ -75,7 +76,9 @@ class LinuxIconProvider implements IconProvider {
 				if (xdgDirFile.exists() && xdgDirFile.isDirectory()) {
 					// Try to add Gnome theme icons
 					addIconsToMap(gnomeThemeIcons,
-							new File(xdgDirFile, "$gnomeTheme/$DEFAULT_THEME_ICONS_DIRECTOERY"))
+							new File(xdgDirFile, "$gnomeTheme/$DEFAULT_THEME_ICONS_DIRECTORY"))
+					addIconsToMap(gnomeThemeIcons,
+							new File(xdgDirFile, "$gnomeTheme/$MINT_THEME_ICONS_DIRECTORY"))
 					// Try to add Hicolor icons
 					addIconsToMap(hicolorIcons, new File(xdgDirFile, XDG_DATA_DIRS_HICOLOR_SUFFIX))
 				}
