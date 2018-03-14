@@ -1,5 +1,7 @@
 # mnLauncher - Simple Groovy application launcher
 
+[![Build Status](https://travis-ci.org/manusa/mnLauncher.svg?branch=master)](https://travis-ci.org/manusa/mnLauncher)
+
 ## Description
 
 mnLauncher is a simple application launcher written in Groovy.
