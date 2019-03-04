@@ -29,6 +29,7 @@ import groovy.util.logging.Log
 
 import javax.imageio.ImageIO
 import javax.swing.*
+import javax.swing.plaf.metal.MetalLookAndFeel
 import java.awt.*
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
@@ -60,8 +61,23 @@ class Launcher {
 	}
 
 	Launcher() {
-//noinspection GroovyUnusedAssignment
+		initUi()
+        //noinspection GroovyUnusedAssignment
 		final JFrame frame = initFrame()
+	}
+
+	/**
+	 * Menu Item colors are not respected in MacOS default L&F.
+	 *
+	 * Select a consistent L&F across all platforms so it can be customized.
+	 *
+	 * @return
+	 */
+	void initUi() {
+		try {
+			UIManager.setLookAndFeel(MetalLookAndFeel.class.getName())
+		} catch (Exception ex) {
+		}
 	}
 
 	JFrame initFrame() {
@@ -138,7 +154,7 @@ class Launcher {
 				mi.setForeground(MENU_COLOR)
 				mi.addActionListener(new LauncherActionListener(me))
 				// Set icon
-				IconProvider iconProvider =ICON_PROVIDERS.stream()
+				IconProvider iconProvider = ICON_PROVIDERS.stream()
 						.filter {ip -> ip.applies(me)}
 						.findFirst().orElse(null)
 				if (iconProvider != null) {
