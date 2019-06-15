@@ -1,1 +1,3 @@
-language: groovy
+language: java
+script:
+- ./server/gradlew -p ./server/ check assemble fatJar || travis_terminate 1
